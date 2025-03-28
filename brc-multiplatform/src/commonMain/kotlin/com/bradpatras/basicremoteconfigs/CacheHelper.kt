@@ -9,28 +9,10 @@ import kotlinx.serialization.json.jsonObject
 import okio.FileSystem
 import okio.Path
 import okio.Path.Companion.toPath
-import okio.SYSTEM
 import okio.buffer
 import okio.use
 
 internal class CacheHelper(private val cachePath: Path, private val fileSystem: FileSystem) {
-//    suspend fun getCacheConfigs(): JsonObject? = withContext(Dispatchers.IO) {
-//        val cacheFile = getCacheFile()
-//
-//        // Return early if cache file doesn't exist
-//        if (!cacheFile.exists()) return@withContext null
-//
-//        try {
-//            val fileString = FileInputStream(cacheFile).use {
-//                return@use it.readBytes().decodeToString()
-//            }
-//
-//            return@withContext JsonObject(fileString)
-//        } catch (exception: Throwable) {
-//            throw exception
-//        }
-//    }
-
     suspend fun getCacheConfigs(): JsonObject? = withContext(Dispatchers.IO) {
         // return early if cache file doesn't exist
         if (!fileSystem.exists(cachePath)) return@withContext null
@@ -43,35 +25,28 @@ internal class CacheHelper(private val cachePath: Path, private val fileSystem: 
         }
     }
 
-    suspend fun setCacheConfigs(configsJson: JSONObject): Unit = withContext(Dispatchers.IO) {
-        val cacheFile = getCacheFile()
-
-        // Create if cache file doesn't exist
-        if (!cacheFile.exists()) {
-            cacheFile.createNewFile()
+    suspend fun setCacheConfigs(configs: JsonObject) = withContext(Dispatchers.IO) {
+        val parent = cachePath.parent ?: Path.DIRECTORY_SEPARATOR.toPath()
+        if (!fileSystem.exists(parent)) {
+            fileSystem.createDirectories(parent)
         }
 
-        try {
-            FileOutputStream(cacheFile).use {
-                it.write(configsJson.toString().encodeToByteArray())
+        fileSystem.sink(cachePath).use { fileSink ->
+            fileSink.buffer().use { bufferedSink ->
+                bufferedSink.writeUtf8(Json.encodeToString(JsonObject.serializer(), configs))
             }
-        } catch (exception: Throwable) {
-            throw exception
         }
     }
 
-    fun getLastModified(): Long? {
-        return if (getCacheFile().exists()) {
-            getCacheFile().lastModified()
+    fun getLastModifiedMillis(): Long? {
+        return if (fileSystem.exists(cachePath)) {
+            fileSystem.metadata(cachePath).lastModifiedAtMillis
         } else {
             null
         }
     }
 
     fun deleteCacheFile() {
-        val cacheFile = getCacheFile()
-        cacheFile.delete()
+        fileSystem.delete(cachePath)
     }
-
-    private fun getCacheFile(): File = File(BrcInitializer.filesDirectory, cacheFilename)
 }

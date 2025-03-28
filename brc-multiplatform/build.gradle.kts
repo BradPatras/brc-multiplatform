@@ -1,3 +1,4 @@
+
 plugins {
     alias(libs.plugins.multiplatform)
     alias(libs.plugins.android.library)
@@ -31,6 +32,7 @@ kotlin {
         commonTest.dependencies {
             implementation(kotlin("test"))
             implementation(libs.okio.test)
+            implementation(libs.kotlinx.coroutines.test)
         }
 
         androidMain.dependencies {
@@ -52,7 +54,6 @@ kotlin {
             }
         }
     }
-
 }
 
 android {
