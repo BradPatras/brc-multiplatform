@@ -3,6 +3,7 @@ package com.bradpatras.basicremoteconfigs
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.IO
 import kotlinx.coroutines.withContext
+import kotlinx.datetime.Instant
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.JsonObject
 import kotlinx.serialization.json.jsonObject
@@ -12,7 +13,10 @@ import okio.Path.Companion.toPath
 import okio.buffer
 import okio.use
 
-internal class CacheHelper(private val cachePath: Path, private val fileSystem: FileSystem) {
+internal class CacheHelper(
+    private val cachePath: Path,
+    private val fileSystem: FileSystem
+) {
     suspend fun getCacheConfigs(): JsonObject? = withContext(Dispatchers.IO) {
         // return early if cache file doesn't exist
         if (!fileSystem.exists(cachePath)) return@withContext null
@@ -38,9 +42,11 @@ internal class CacheHelper(private val cachePath: Path, private val fileSystem: 
         }
     }
 
-    fun getLastModifiedMillis(): Long? {
+    fun getLastModified(): Instant? {
         return if (fileSystem.exists(cachePath)) {
-            fileSystem.metadata(cachePath).lastModifiedAtMillis
+            fileSystem.metadata(cachePath).lastModifiedAtMillis?.let {
+                Instant.fromEpochMilliseconds(it)
+            }
         } else {
             null
         }
