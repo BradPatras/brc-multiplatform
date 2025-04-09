@@ -15,3 +15,5 @@ Pods/
 *.jks
 *.gpg
 *yarn.lock
+/sample/iosApp/iosApp.xcodeproj/project.xcworkspace/contents.xcworkspacedata
+*.xcframework.zip
