@@ -31,14 +31,25 @@ private val CACHE_EXPIRATION_HOURS: Duration = Duration.parse("24h")
  * @property customHeaders Additional headers that will be sent with the fetch request
  * @constructor Create empty Basic remote configs
  */
-class BasicRemoteConfigs(
+@Suppress("MemberVisibilityCanBePrivate", "unused")
+class BasicRemoteConfigs internal constructor(
     private val remoteUrl: String,
     private val customHeaders: HashMap<String, String> = HashMap(),
-    private val instantProvider: InstantProvider = InstantProvider()
+    private val instantProvider: InstantProvider,
+    private val cacheHelper: CacheHelper
 ) {
     private var _version: Int = VERSION_NONE
     private var _values: JsonObject = JsonObject(emptyMap())
-    private val cacheHelper = CacheHelper(CONFIG_CACHE_FILENAME.toPath(), FileSystem.SYSTEM)
+
+    constructor(
+        remoteUrl: String,
+        customHeaders: HashMap<String, String> = HashMap()
+    ) : this(
+        remoteUrl = remoteUrl,
+        customHeaders = customHeaders,
+        instantProvider = InstantProvider(),
+        cacheHelper = CacheHelper(CONFIG_CACHE_FILENAME.toPath(), FileSystem.SYSTEM)
+    )
 
     /**
      * Hash map containing the config values
@@ -91,7 +102,7 @@ class BasicRemoteConfigs(
     private suspend fun fetchRemoteConfigs(): Unit = coroutineScope {
         try {
             val configs = requireNotNull(HttpRequestHelper.makeGetRequest(remoteUrl, customHeaders))
-            val newVersion = configs.get(VERSION_KEY)?.jsonPrimitive?.intOrNull ?: VERSION_NONE
+            val newVersion = configs[VERSION_KEY]?.jsonPrimitive?.intOrNull ?: VERSION_NONE
 
             // Do not emit a new value if the version hasn't changed
             if ((newVersion != _version) or (newVersion == VERSION_NONE)) {
@@ -108,7 +119,7 @@ class BasicRemoteConfigs(
     private suspend fun fetchLocalConfigs(): Unit = coroutineScope {
         try {
             val configs = requireNotNull(cacheHelper.getCacheConfigs())
-            val newVersion = configs.get(VERSION_KEY)?.jsonPrimitive?.intOrNull ?: VERSION_NONE
+            val newVersion = configs[VERSION_KEY]?.jsonPrimitive?.intOrNull ?: VERSION_NONE
 
             // Do not emit a new value if the version hasn't changed
             if ((newVersion != _version) or (newVersion == VERSION_NONE)) {
@@ -188,7 +199,7 @@ class BasicRemoteConfigs(
      * @param key
      * @return String array associated with key, null if key or value doesn't exist.
      */
-    suspend fun getStringArray(key: String): Array<String>? {
+    fun getStringArray(key: String): Array<String>? {
         return values[key]?.jsonArray?.mapNotNull { element ->
             element.jsonPrimitive.takeIf { it.isString }?.content
         }?.toTypedArray() ?: return null
