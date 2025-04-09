@@ -16,13 +16,13 @@ import kotlin.time.Duration
 private const val VERSION_NONE = -1
 
 // Json key for the config version
-private const val VERSION_KEY = "ver"
+private const val VERSION_KEY = "v"
 
 // Cache filename
 private const val CONFIG_CACHE_FILENAME = "brc_cache"
 
 // Amount of hours the cached configs remain valid
-private val CACHE_EXPIRATION_HOURS: Duration = Duration.parse("24h")
+private val CACHE_EXPIRATION: Duration = Duration.parse("24h")
 
 /**
  * Basic remote configs
@@ -38,7 +38,6 @@ class BasicRemoteConfigs internal constructor(
     private val instantProvider: InstantProvider,
     private val cacheHelper: CacheHelper
 ) {
-    private var _version: Int = VERSION_NONE
     private var _values: JsonObject = JsonObject(emptyMap())
 
     constructor(
@@ -52,7 +51,7 @@ class BasicRemoteConfigs internal constructor(
     )
 
     /**
-     * Hash map containing the config values
+     * Hash map containing the current config values
      */
     val values: JsonObject get() = _values
 
@@ -60,7 +59,7 @@ class BasicRemoteConfigs internal constructor(
      * Version parsed from the fetched configs.  If configs haven't been fetched or
      * there was no version key included, the version will default to *-1*
      */
-    val version: Int get() = _version
+    val version: Int get() = values[VERSION_KEY]?.jsonPrimitive?.intOrNull ?: VERSION_NONE
 
     /**
      * An Instant representing the last time the configs were successfully fetched and updated.
@@ -68,18 +67,17 @@ class BasicRemoteConfigs internal constructor(
     var fetchDate: Instant? = null
 
     /**
-     * Fetch configs from **url** provided in class constructor.
-     * If configs are fetched successfully and contain a **version** value
-     * different from what is currently stored, a new value will be emitted
-     * from the **valuesFlow** property.
-     *
-     * **Note:** This function may throw IOException, JSONException and possibly others.
+     * Fetch configs, either from cache or remote server. Cached configs will be used if they
+     * exist, the expiration date hasn't been reached and the `ignoreCache` flag is false or
+     * omitted.
+     * @param ignoreCache If true, the cache will be ignored and configs will be fetched from
+     * the remote server.
      */
     suspend fun fetchConfigs(ignoreCache: Boolean = false): Unit = coroutineScope {
         val cacheConfigs = cacheHelper.getCacheConfigs()
-        val cacheLastModified = cacheHelper.getLastModified() ?: instantProvider.now()
+        val cacheLastModified = cacheHelper.getLastModified() ?: Instant.DISTANT_PAST
         val cacheExists = cacheConfigs != null
-        val cacheIsNotExpired = cacheLastModified - instantProvider.now() < CACHE_EXPIRATION_HOURS
+        val cacheIsNotExpired = instantProvider.now() - cacheLastModified < CACHE_EXPIRATION
 
         if (!ignoreCache and cacheExists and cacheIsNotExpired) {
             fetchLocalConfigs()
@@ -95,7 +93,6 @@ class BasicRemoteConfigs internal constructor(
     fun clearCache() {
         cacheHelper.deleteCacheFile()
         _values = JsonObject(emptyMap())
-        _version = VERSION_NONE
         fetchDate = null
     }
 
@@ -104,12 +101,11 @@ class BasicRemoteConfigs internal constructor(
             val configs = requireNotNull(HttpRequestHelper.makeGetRequest(remoteUrl, customHeaders))
             val newVersion = configs[VERSION_KEY]?.jsonPrimitive?.intOrNull ?: VERSION_NONE
 
-            // Do not emit a new value if the version hasn't changed
-            if ((newVersion != _version) or (newVersion == VERSION_NONE)) {
+            // if version hasn't changed, do nothing
+            if ((newVersion != version) or (newVersion == VERSION_NONE)) {
                 fetchDate = instantProvider.now()
                 cacheHelper.setCacheConfigs(configs)
                 _values = configs
-                _version = newVersion
             }
         } catch (e: Throwable) {
             throw e
@@ -119,12 +115,7 @@ class BasicRemoteConfigs internal constructor(
     private suspend fun fetchLocalConfigs(): Unit = coroutineScope {
         try {
             val configs = requireNotNull(cacheHelper.getCacheConfigs())
-            val newVersion = configs[VERSION_KEY]?.jsonPrimitive?.intOrNull ?: VERSION_NONE
-
-            // Do not emit a new value if the version hasn't changed
-            if ((newVersion != _version) or (newVersion == VERSION_NONE)) {
-                _values = configs
-            }
+            _values = configs
         } catch (e: Throwable) {
             throw e
         }
