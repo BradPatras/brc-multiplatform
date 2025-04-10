@@ -1,5 +1,9 @@
 package com.bradpatras.basicremoteconfigs
 
+import com.bradpatras.basicremoteconfigs.cache.CacheHelper
+import com.bradpatras.basicremoteconfigs.cache.DefaultCacheHelper
+import com.bradpatras.basicremoteconfigs.network.DefaultNetworkHelper
+import com.bradpatras.basicremoteconfigs.network.NetworkHelper
 import kotlinx.coroutines.coroutineScope
 import kotlinx.datetime.Instant
 import kotlinx.serialization.json.JsonObject
@@ -36,7 +40,8 @@ class BasicRemoteConfigs internal constructor(
     private val remoteUrl: String,
     private val customHeaders: HashMap<String, String> = HashMap(),
     private val instantProvider: InstantProvider,
-    private val cacheHelper: CacheHelper
+    private val cacheHelper: CacheHelper,
+    private val networkHelper: NetworkHelper
 ) {
     private var _values: JsonObject = JsonObject(emptyMap())
 
@@ -47,7 +52,8 @@ class BasicRemoteConfigs internal constructor(
         remoteUrl = remoteUrl,
         customHeaders = customHeaders,
         instantProvider = InstantProvider(),
-        cacheHelper = CacheHelper(CONFIG_CACHE_FILENAME.toPath(), FileSystem.SYSTEM)
+        cacheHelper = DefaultCacheHelper(CONFIG_CACHE_FILENAME.toPath(), FileSystem.SYSTEM),
+        networkHelper = DefaultNetworkHelper()
     )
 
     /**
@@ -98,7 +104,7 @@ class BasicRemoteConfigs internal constructor(
 
     private suspend fun fetchRemoteConfigs(): Unit = coroutineScope {
         try {
-            val configs = requireNotNull(HttpRequestHelper.makeGetRequest(remoteUrl, customHeaders))
+            val configs = requireNotNull(networkHelper.requestJson(remoteUrl, customHeaders))
             val newVersion = configs[VERSION_KEY]?.jsonPrimitive?.intOrNull ?: VERSION_NONE
 
             // if version hasn't changed, do nothing

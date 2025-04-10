@@ -1,5 +1,7 @@
 package com.bradpatras.basicremoteconfigs
 
+import com.bradpatras.basicremoteconfigs.cache.CacheHelper
+import com.bradpatras.basicremoteconfigs.cache.DefaultCacheHelper
 import kotlinx.coroutines.test.runTest
 import kotlinx.datetime.Clock
 import kotlinx.datetime.Instant.Companion.fromEpochSeconds
@@ -30,7 +32,7 @@ class CacheHelperTest {
     fun testSetCacheConfigs() = runTest {
         val fileSystem = FakeFileSystem()
         val configsPath = "/path/to/configs.json".toPath()
-        val cacheHelper = CacheHelper(configsPath, fileSystem)
+        val cacheHelper = DefaultCacheHelper(configsPath, fileSystem)
 
         val configs = JsonObject(
             mapOf(
@@ -51,7 +53,7 @@ class CacheHelperTest {
     fun testGetCacheConfigs() = runTest {
         val fileSystem = FakeFileSystem()
         val configsPath = "/path/to/configs.json".toPath()
-        val cacheHelper = CacheHelper(configsPath, fileSystem)
+        val cacheHelper = DefaultCacheHelper(configsPath, fileSystem)
 
         val configs = JsonObject(
             mapOf(
@@ -74,7 +76,7 @@ class CacheHelperTest {
     fun testDeleteCacheNoConfigs() {
         val fileSystem = FakeFileSystem()
         val configsPath = "/path/to/configs.json".toPath()
-        val cacheHelper = CacheHelper(configsPath, fileSystem)
+        val cacheHelper = DefaultCacheHelper(configsPath, fileSystem)
 
         // Calling delete on non-existent cache file should not raise any exceptions
         cacheHelper.deleteCacheFile()
@@ -84,7 +86,7 @@ class CacheHelperTest {
     fun testGetCacheConfigsNoCache() = runTest {
         val fileSystem = FakeFileSystem()
         val configsPath = "/path/to/configs.json".toPath()
-        val cacheHelper = CacheHelper(configsPath, fileSystem)
+        val cacheHelper = DefaultCacheHelper(configsPath, fileSystem)
 
         assertNull(cacheHelper.getCacheConfigs())
     }
@@ -93,7 +95,7 @@ class CacheHelperTest {
     fun testDeleteCache() = runTest {
         val fileSystem = FakeFileSystem()
         val configsPath = "/path/to/configs.json".toPath()
-        val cacheHelper = CacheHelper(configsPath, fileSystem)
+        val cacheHelper = DefaultCacheHelper(configsPath, fileSystem)
 
         val configs = JsonObject(
             mapOf(
@@ -122,7 +124,7 @@ class CacheHelperTest {
         val clock = FakeClock()
         val fileSystem = FakeFileSystem(clock)
         val configsPath = "/path/to/configs.json".toPath()
-        val cacheHelper = CacheHelper(configsPath, fileSystem)
+        val cacheHelper = DefaultCacheHelper(configsPath, fileSystem)
         val configs = JsonObject(
             mapOf(
                 "ver" to JsonPrimitive("1")
@@ -131,15 +133,15 @@ class CacheHelperTest {
 
         cacheHelper.setCacheConfigs(configs)
 
-        assertEquals(cacheHelper.getLastModifiedMillis(), clock.now().toEpochMilliseconds())
+        assertEquals(cacheHelper.getLastModified(), clock.now())
     }
 
     @Test
     fun testGetLastModifiedNoCache() {
         val fileSystem = FakeFileSystem()
         val configsPath = "/path/to/configs.json".toPath()
-        val cacheHelper = CacheHelper(configsPath, fileSystem)
+        val cacheHelper = DefaultCacheHelper(configsPath, fileSystem)
 
-        assertNull(cacheHelper.getLastModifiedMillis())
+        assertNull(cacheHelper.getLastModified())
     }
 }

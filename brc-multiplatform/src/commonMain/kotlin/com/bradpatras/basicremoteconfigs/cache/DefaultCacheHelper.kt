@@ -1,4 +1,4 @@
-package com.bradpatras.basicremoteconfigs
+package com.bradpatras.basicremoteconfigs.cache
 
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.IO
@@ -13,11 +13,11 @@ import okio.Path.Companion.toPath
 import okio.buffer
 import okio.use
 
-internal class CacheHelper(
+internal class DefaultCacheHelper(
     private val cachePath: Path,
     private val fileSystem: FileSystem
-) {
-    suspend fun getCacheConfigs(): JsonObject? = withContext(Dispatchers.IO) {
+) : CacheHelper {
+    override suspend fun getCacheConfigs(): JsonObject? = withContext(Dispatchers.IO) {
         // return early if cache file doesn't exist
         if (!fileSystem.exists(cachePath)) return@withContext null
 
@@ -29,7 +29,7 @@ internal class CacheHelper(
         }
     }
 
-    suspend fun setCacheConfigs(configs: JsonObject) = withContext(Dispatchers.IO) {
+    override suspend fun setCacheConfigs(configs: JsonObject): Unit = withContext(Dispatchers.IO) {
         val parent = cachePath.parent ?: Path.DIRECTORY_SEPARATOR.toPath()
         if (!fileSystem.exists(parent)) {
             fileSystem.createDirectories(parent)
@@ -42,7 +42,7 @@ internal class CacheHelper(
         }
     }
 
-    fun getLastModified(): Instant? {
+    override fun getLastModified(): Instant? {
         return if (fileSystem.exists(cachePath)) {
             fileSystem.metadata(cachePath).lastModifiedAtMillis?.let {
                 Instant.fromEpochMilliseconds(it)
@@ -52,7 +52,7 @@ internal class CacheHelper(
         }
     }
 
-    fun deleteCacheFile() {
+    override fun deleteCacheFile() {
         fileSystem.delete(cachePath)
     }
 }
