@@ -2,6 +2,8 @@ package com.bradpatras.basicremoteconfigs
 
 import com.bradpatras.basicremoteconfigs.cache.CacheHelper
 import com.bradpatras.basicremoteconfigs.cache.DefaultCacheHelper
+import com.bradpatras.basicremoteconfigs.cache.DefaultInstantProvider
+import com.bradpatras.basicremoteconfigs.cache.InstantProvider
 import com.bradpatras.basicremoteconfigs.network.DefaultNetworkHelper
 import com.bradpatras.basicremoteconfigs.network.NetworkHelper
 import kotlinx.coroutines.coroutineScope
@@ -51,7 +53,7 @@ class BasicRemoteConfigs internal constructor(
     ) : this(
         remoteUrl = remoteUrl,
         customHeaders = customHeaders,
-        instantProvider = InstantProvider(),
+        instantProvider = DefaultInstantProvider(),
         cacheHelper = DefaultCacheHelper(CONFIG_CACHE_FILENAME.toPath(), FileSystem.SYSTEM),
         networkHelper = DefaultNetworkHelper()
     )
