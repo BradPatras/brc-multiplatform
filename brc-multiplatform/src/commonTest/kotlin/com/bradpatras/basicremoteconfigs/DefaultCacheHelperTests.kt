@@ -1,6 +1,5 @@
 package com.bradpatras.basicremoteconfigs
 
-import com.bradpatras.basicremoteconfigs.cache.CacheHelper
 import com.bradpatras.basicremoteconfigs.cache.DefaultCacheHelper
 import kotlinx.coroutines.test.runTest
 import kotlinx.datetime.Clock
@@ -15,16 +14,11 @@ import kotlin.test.assertEquals
 import kotlin.test.assertFalse
 import kotlin.test.assertNull
 import kotlin.test.assertTrue
-import kotlin.time.Duration
 
 class FakeClock : Clock {
     private var time = fromEpochSeconds(1743134025L)
 
     override fun now() = time
-
-    fun sleep(duration: Duration) {
-        time = time.plus(duration)
-    }
 }
 
 class CacheHelperTest {
