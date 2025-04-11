@@ -19,5 +19,4 @@ class FakeThrowingNetworkHelper : NetworkHelper {
     ): JsonObject? {
         throw Exception()
     }
-
 }

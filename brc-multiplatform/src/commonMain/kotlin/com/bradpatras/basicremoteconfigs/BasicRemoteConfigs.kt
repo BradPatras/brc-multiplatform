@@ -30,13 +30,6 @@ private const val CONFIG_CACHE_FILENAME = "brc_cache"
 // Amount of hours the cached configs remain valid
 private val CACHE_EXPIRATION: Duration = Duration.parse("24h")
 
-/**
- * Basic remote configs
- *
- * @property remoteUrl Path pointing to the remote server providing the configs
- * @property customHeaders Additional headers that will be sent with the fetch request
- * @constructor Create empty Basic remote configs
- */
 @Suppress("MemberVisibilityCanBePrivate", "unused")
 class BasicRemoteConfigs internal constructor(
     private val remoteUrl: String,
@@ -47,6 +40,13 @@ class BasicRemoteConfigs internal constructor(
 ) {
     private var _values: JsonObject = JsonObject(emptyMap())
 
+    /**
+     * Basic remote configs
+     *
+     * @property remoteUrl Path pointing to the remote server providing the configs
+     * @property customHeaders Additional headers that will be sent with the fetch request
+     * @constructor Create empty Basic remote configs
+     */
     constructor(
         remoteUrl: String,
         customHeaders: HashMap<String, String> = HashMap()
@@ -84,20 +84,23 @@ class BasicRemoteConfigs internal constructor(
     suspend fun fetchConfigs(ignoreCache: Boolean = false): Unit = coroutineScope {
         val cacheConfigs = cacheHelper.getCacheConfigs()
         val cacheLastModified = cacheHelper.getLastModified() ?: Instant.DISTANT_PAST
-        val cacheExists = cacheConfigs != null
         val cacheIsNotExpired = instantProvider.now() - cacheLastModified < CACHE_EXPIRATION
 
-        if (!ignoreCache and cacheExists and cacheIsNotExpired) {
-            fetchLocalConfigs()
+        if (!ignoreCache && cacheConfigs != null && cacheIsNotExpired) {
+            _values = cacheConfigs
         } else {
             try {
                 fetchRemoteConfigs()
             } catch (e: Throwable) {
-                fetchLocalConfigs()
+                _values = cacheConfigs ?: JsonObject(emptyMap())
             }
         }
     }
 
+    /**
+     * Delete the locally stored config file
+     *
+     */
     fun clearCache() {
         cacheHelper.deleteCacheFile()
         _values = JsonObject(emptyMap())
@@ -115,15 +118,6 @@ class BasicRemoteConfigs internal constructor(
                 cacheHelper.setCacheConfigs(configs)
                 _values = configs
             }
-        } catch (e: Throwable) {
-            throw e
-        }
-    }
-
-    private suspend fun fetchLocalConfigs(): Unit = coroutineScope {
-        try {
-            val configs = requireNotNull(cacheHelper.getCacheConfigs())
-            _values = configs
         } catch (e: Throwable) {
             throw e
         }
