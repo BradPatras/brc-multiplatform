@@ -2,8 +2,6 @@ package com.bradpatras.basicremoteconfigs
 
 import com.bradpatras.basicremoteconfigs.cache.DefaultCacheHelper
 import kotlinx.coroutines.test.runTest
-import kotlinx.datetime.Clock
-import kotlinx.datetime.Instant.Companion.fromEpochSeconds
 import kotlinx.serialization.json.JsonArray
 import kotlinx.serialization.json.JsonObject
 import kotlinx.serialization.json.JsonPrimitive
@@ -15,13 +13,7 @@ import kotlin.test.assertFalse
 import kotlin.test.assertNull
 import kotlin.test.assertTrue
 
-class FakeClock : Clock {
-    private var time = fromEpochSeconds(1743134025L)
-
-    override fun now() = time
-}
-
-class CacheHelperTest {
+class DefaultCacheHelperTests {
     @Test
     fun testSetCacheConfigs() = runTest {
         val fileSystem = FakeFileSystem()
