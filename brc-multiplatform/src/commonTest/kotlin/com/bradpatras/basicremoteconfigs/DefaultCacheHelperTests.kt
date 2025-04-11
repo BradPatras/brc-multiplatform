@@ -22,7 +22,7 @@ class DefaultCacheHelperTests {
 
         val configs = JsonObject(
             mapOf(
-                "ver" to JsonPrimitive("1"),
+                "v" to JsonPrimitive("1"),
                 "myString" to JsonPrimitive("Hello there"),
                 "myInt" to JsonPrimitive(100),
                 "myBoolean" to JsonPrimitive(true),
@@ -43,7 +43,7 @@ class DefaultCacheHelperTests {
 
         val configs = JsonObject(
             mapOf(
-                "ver" to JsonPrimitive("1"),
+                "v" to JsonPrimitive("1"),
                 "myString" to JsonPrimitive("Hello there"),
                 "myInt" to JsonPrimitive(100),
                 "myBoolean" to JsonPrimitive(true),
@@ -85,7 +85,7 @@ class DefaultCacheHelperTests {
 
         val configs = JsonObject(
             mapOf(
-                "ver" to JsonPrimitive("1"),
+                "v" to JsonPrimitive("1"),
                 "myString" to JsonPrimitive("Hello there"),
                 "myInt" to JsonPrimitive(100),
                 "myBoolean" to JsonPrimitive(true),
@@ -113,7 +113,7 @@ class DefaultCacheHelperTests {
         val cacheHelper = DefaultCacheHelper(configsPath, fileSystem)
         val configs = JsonObject(
             mapOf(
-                "ver" to JsonPrimitive("1")
+                "v" to JsonPrimitive("1")
             )
         )
 
