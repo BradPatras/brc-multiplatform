@@ -12,7 +12,7 @@ class FakeNetworkHelper(
     ): JsonObject? = configs
 }
 
-class FakeThrowingNetworkHelper(): NetworkHelper {
+class FakeThrowingNetworkHelper : NetworkHelper {
     override suspend fun requestJson(
         url: String,
         customHeaders: HashMap<String, String>
