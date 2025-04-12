@@ -1,12 +1,9 @@
-# brc-multiplatform
-![gradle build workflow](https://github.com/BradPatras/brc-multiplatform/actions/workflows/gradle.yml/badge.svg)
-
 Kotlin Multiplatform Library
 
 ### Run Sample App
 
- - Android: `open project in Android Studio and run the sample app`
- - iOS: `open 'sample/iosApp/iosApp.xcodeproj' in Xcode and run the sample app`
+- Android: `open project in Android Studio and run the sample app`
+- iOS: `open 'sample/iosApp/iosApp.xcodeproj' in Xcode and run the sample app`
 
 ### Publish to MavenLocal
 
