@@ -3,19 +3,26 @@ plugins {
     alias(libs.plugins.multiplatform)
     alias(libs.plugins.android.library)
     alias(libs.plugins.kotlinx.serialization)
-    id("convention.publication")
+    alias(libs.plugins.multiplatformSwiftPackage)
 }
 
 group = "com.bradpatras.basicremoteconfigs"
-version = "1.0.0"
+version = "0.0.1"
+val iosLibraryName = "BasicRemoteConfigs"
 
 kotlin {
     jvmToolchain(17)
 
     androidTarget { publishLibraryVariants("release") }
-    iosX64()
-    iosArm64()
-    iosSimulatorArm64()
+    listOf(
+        iosX64(),
+        iosArm64(),
+        iosSimulatorArm64(),
+    ).forEach {
+        it.binaries.framework {
+            baseName = iosLibraryName
+        }
+    }
 
     sourceSets {
         commonMain.dependencies {
@@ -63,5 +70,16 @@ android {
 
     defaultConfig {
         minSdk = 21
+    }
+}
+
+multiplatformSwiftPackage {
+    outputDirectory(File(projectDir, "swiftpackage"))
+    packageName(iosLibraryName)
+    zipFileName("$iosLibraryName.xcframework")
+    swiftToolsVersion("5.10")
+    distributionMode { remote("https://www.github.com/bradpatras/brc-multiplatform/releases/download/v$version") }
+    targetPlatforms {
+        iOS { v("16") }
     }
 }

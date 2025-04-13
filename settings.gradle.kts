@@ -28,7 +28,6 @@ dependencyResolutionManagement {
         mavenCentral()
     }
 }
-includeBuild("convention-plugins")
 include(":brc-multiplatform")
 include(":sample:composeApp")
 
