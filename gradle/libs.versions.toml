@@ -10,6 +10,8 @@ okio = "3.10.2"
 compose = "1.7.3"
 androidx-activityCompose = "1.9.3"
 multiplatformSwiftPackage = "2.2.3"
+maven-publish = "0.28.0"
+gradleup = "0.0.7"
 
 [libraries]
 
@@ -37,3 +39,5 @@ compose = { id = "org.jetbrains.compose", version.ref = "compose" }
 compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
 android-application = { id = "com.android.application", version.ref = "agp" }
 multiplatformSwiftPackage = { id = "io.github.luca992.multiplatform-swiftpackage", version.ref = "multiplatformSwiftPackage"}
+maven-publish = { id = "com.vanniktech.maven.publish", version.ref = "maven-publish" }
+gradleup = { id = "com.gradleup.nmcp", version.ref = "gradleup" }

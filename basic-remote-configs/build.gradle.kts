@@ -4,10 +4,12 @@ plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.kotlinx.serialization)
     alias(libs.plugins.multiplatformSwiftPackage)
+    alias(libs.plugins.maven.publish).apply(false)
+    alias(libs.plugins.gradleup).apply(false)
 }
 
 group = "com.bradpatras.basicremoteconfigs"
-version = "0.0.1"
+version = property("VERSION_NAME")!!
 val iosLibraryName = "BasicRemoteConfigs"
 
 kotlin {

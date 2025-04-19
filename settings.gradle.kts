@@ -28,6 +28,6 @@ dependencyResolutionManagement {
         mavenCentral()
     }
 }
-include(":brc-multiplatform")
+include(":basic-remote-configs")
 include(":sample:composeApp")
 
