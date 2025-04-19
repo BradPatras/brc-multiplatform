@@ -1,4 +1,4 @@
-package com.bradpatras.basicremoteconfigs.network
+package io.github.bradpatras.basicremoteconfigs.network
 
 import io.ktor.client.HttpClient
 import io.ktor.client.engine.cio.CIO

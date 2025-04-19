@@ -1,7 +1,7 @@
-package com.bradpatras.basicremoteconfigs
+package io.github.bradpatras.basicremoteconfigs
 
-import com.bradpatras.basicremoteconfigs.cache.CacheHelper
-import com.bradpatras.basicremoteconfigs.cache.InstantProvider
+import io.github.bradpatras.basicremoteconfigs.cache.CacheHelper
+import io.github.bradpatras.basicremoteconfigs.cache.InstantProvider
 import kotlinx.datetime.Instant
 import kotlinx.serialization.json.JsonObject
 

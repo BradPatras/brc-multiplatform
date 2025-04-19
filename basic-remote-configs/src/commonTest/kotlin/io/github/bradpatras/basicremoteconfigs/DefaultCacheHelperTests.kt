@@ -1,6 +1,6 @@
-package com.bradpatras.basicremoteconfigs
+package io.github.bradpatras.basicremoteconfigs
 
-import com.bradpatras.basicremoteconfigs.cache.DefaultCacheHelper
+import io.github.bradpatras.basicremoteconfigs.cache.DefaultCacheHelper
 import kotlinx.coroutines.test.runTest
 import kotlinx.serialization.json.JsonArray
 import kotlinx.serialization.json.JsonObject
@@ -18,7 +18,8 @@ class DefaultCacheHelperTests {
     fun testSetCacheConfigs() = runTest {
         val fileSystem = FakeFileSystem()
         val configsPath = "/path/to/configs.json".toPath()
-        val cacheHelper = DefaultCacheHelper(configsPath, fileSystem)
+        val cacheHelper =
+            io.github.bradpatras.basicremoteconfigs.cache.DefaultCacheHelper(configsPath, fileSystem)
 
         val configs = JsonObject(
             mapOf(
@@ -39,7 +40,8 @@ class DefaultCacheHelperTests {
     fun testGetCacheConfigs() = runTest {
         val fileSystem = FakeFileSystem()
         val configsPath = "/path/to/configs.json".toPath()
-        val cacheHelper = DefaultCacheHelper(configsPath, fileSystem)
+        val cacheHelper =
+            io.github.bradpatras.basicremoteconfigs.cache.DefaultCacheHelper(configsPath, fileSystem)
 
         val configs = JsonObject(
             mapOf(
@@ -62,7 +64,8 @@ class DefaultCacheHelperTests {
     fun testDeleteCacheNoConfigs() {
         val fileSystem = FakeFileSystem()
         val configsPath = "/path/to/configs.json".toPath()
-        val cacheHelper = DefaultCacheHelper(configsPath, fileSystem)
+        val cacheHelper =
+            io.github.bradpatras.basicremoteconfigs.cache.DefaultCacheHelper(configsPath, fileSystem)
 
         // Calling delete on non-existent cache file should not raise any exceptions
         cacheHelper.deleteCacheFile()
@@ -72,7 +75,8 @@ class DefaultCacheHelperTests {
     fun testGetCacheConfigsNoCache() = runTest {
         val fileSystem = FakeFileSystem()
         val configsPath = "/path/to/configs.json".toPath()
-        val cacheHelper = DefaultCacheHelper(configsPath, fileSystem)
+        val cacheHelper =
+            io.github.bradpatras.basicremoteconfigs.cache.DefaultCacheHelper(configsPath, fileSystem)
 
         assertNull(cacheHelper.getCacheConfigs())
     }
@@ -81,7 +85,8 @@ class DefaultCacheHelperTests {
     fun testDeleteCache() = runTest {
         val fileSystem = FakeFileSystem()
         val configsPath = "/path/to/configs.json".toPath()
-        val cacheHelper = DefaultCacheHelper(configsPath, fileSystem)
+        val cacheHelper =
+            io.github.bradpatras.basicremoteconfigs.cache.DefaultCacheHelper(configsPath, fileSystem)
 
         val configs = JsonObject(
             mapOf(
@@ -110,7 +115,8 @@ class DefaultCacheHelperTests {
         val clock = FakeClock()
         val fileSystem = FakeFileSystem(clock)
         val configsPath = "/path/to/configs.json".toPath()
-        val cacheHelper = DefaultCacheHelper(configsPath, fileSystem)
+        val cacheHelper =
+            io.github.bradpatras.basicremoteconfigs.cache.DefaultCacheHelper(configsPath, fileSystem)
         val configs = JsonObject(
             mapOf(
                 "v" to JsonPrimitive("1")
@@ -126,7 +132,8 @@ class DefaultCacheHelperTests {
     fun testGetLastModifiedNoCache() {
         val fileSystem = FakeFileSystem()
         val configsPath = "/path/to/configs.json".toPath()
-        val cacheHelper = DefaultCacheHelper(configsPath, fileSystem)
+        val cacheHelper =
+            io.github.bradpatras.basicremoteconfigs.cache.DefaultCacheHelper(configsPath, fileSystem)
 
         assertNull(cacheHelper.getLastModified())
     }

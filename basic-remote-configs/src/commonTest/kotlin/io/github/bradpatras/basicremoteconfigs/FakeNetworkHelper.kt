@@ -1,6 +1,6 @@
-package com.bradpatras.basicremoteconfigs
+package io.github.bradpatras.basicremoteconfigs
 
-import com.bradpatras.basicremoteconfigs.network.NetworkHelper
+import io.github.bradpatras.basicremoteconfigs.network.NetworkHelper
 import kotlinx.serialization.json.JsonObject
 
 class FakeNetworkHelper(

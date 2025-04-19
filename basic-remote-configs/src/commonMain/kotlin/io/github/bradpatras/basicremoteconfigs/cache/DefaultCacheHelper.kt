@@ -1,4 +1,4 @@
-package com.bradpatras.basicremoteconfigs.cache
+package io.github.bradpatras.basicremoteconfigs.cache
 
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.IO
@@ -16,7 +16,7 @@ import okio.use
 internal class DefaultCacheHelper(
     private val cachePath: Path,
     private val fileSystem: FileSystem
-) : CacheHelper {
+) : io.github.bradpatras.basicremoteconfigs.cache.CacheHelper {
     override suspend fun getCacheConfigs(): JsonObject? = withContext(Dispatchers.IO) {
         // return early if cache file doesn't exist
         if (!fileSystem.exists(cachePath)) return@withContext null

@@ -1,11 +1,10 @@
-package com.bradpatras.basicremoteconfigs
+package io.github.bradpatras.basicremoteconfigs
 
-import com.bradpatras.basicremoteconfigs.cache.CacheHelper
-import com.bradpatras.basicremoteconfigs.cache.DefaultCacheHelper
-import com.bradpatras.basicremoteconfigs.cache.DefaultInstantProvider
-import com.bradpatras.basicremoteconfigs.cache.InstantProvider
-import com.bradpatras.basicremoteconfigs.network.DefaultNetworkHelper
-import com.bradpatras.basicremoteconfigs.network.NetworkHelper
+import io.github.bradpatras.basicremoteconfigs.cache.CacheHelper
+import io.github.bradpatras.basicremoteconfigs.cache.DefaultInstantProvider
+import io.github.bradpatras.basicremoteconfigs.cache.InstantProvider
+import io.github.bradpatras.basicremoteconfigs.network.DefaultNetworkHelper
+import io.github.bradpatras.basicremoteconfigs.network.NetworkHelper
 import kotlinx.coroutines.coroutineScope
 import kotlinx.datetime.Instant
 import kotlinx.serialization.json.JsonObject
@@ -54,7 +53,10 @@ public class BasicRemoteConfigs internal constructor(
         remoteUrl = remoteUrl,
         customHeaders = customHeaders,
         instantProvider = DefaultInstantProvider(),
-        cacheHelper = DefaultCacheHelper(CONFIG_CACHE_FILENAME.toPath(), FileSystem.SYSTEM),
+        cacheHelper = io.github.bradpatras.basicremoteconfigs.cache.DefaultCacheHelper(
+            CONFIG_CACHE_FILENAME.toPath(),
+            FileSystem.SYSTEM
+        ),
         networkHelper = DefaultNetworkHelper()
     )
 

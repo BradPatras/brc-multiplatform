@@ -1,4 +1,4 @@
-package com.bradpatras.basicremoteconfigs
+package io.github.bradpatras.basicremoteconfigs
 
 import kotlinx.coroutines.test.runTest
 import kotlinx.datetime.Instant

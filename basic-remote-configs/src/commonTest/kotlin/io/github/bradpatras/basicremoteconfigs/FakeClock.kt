@@ -1,4 +1,4 @@
-package com.bradpatras.basicremoteconfigs
+package io.github.bradpatras.basicremoteconfigs
 
 import kotlinx.datetime.Clock
 import kotlinx.datetime.Instant.Companion.fromEpochSeconds

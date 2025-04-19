@@ -1,4 +1,4 @@
-package com.bradpatras.basicremoteconfigs.network
+package io.github.bradpatras.basicremoteconfigs.network
 
 import kotlinx.serialization.json.JsonObject
 

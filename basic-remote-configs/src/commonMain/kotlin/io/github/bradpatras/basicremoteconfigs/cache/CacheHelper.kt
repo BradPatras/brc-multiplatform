@@ -1,4 +1,4 @@
-package com.bradpatras.basicremoteconfigs.cache
+package io.github.bradpatras.basicremoteconfigs.cache
 
 import kotlinx.datetime.Instant
 import kotlinx.serialization.json.JsonObject
