@@ -1,6 +1,7 @@
 package io.github.bradpatras.basicremoteconfigs
 
 import io.github.bradpatras.basicremoteconfigs.cache.CacheHelper
+import io.github.bradpatras.basicremoteconfigs.cache.DefaultCacheHelper
 import io.github.bradpatras.basicremoteconfigs.cache.DefaultInstantProvider
 import io.github.bradpatras.basicremoteconfigs.cache.InstantProvider
 import io.github.bradpatras.basicremoteconfigs.network.DefaultNetworkHelper
@@ -53,15 +54,15 @@ public class BasicRemoteConfigs internal constructor(
         remoteUrl = remoteUrl,
         customHeaders = customHeaders,
         instantProvider = DefaultInstantProvider(),
-        cacheHelper = io.github.bradpatras.basicremoteconfigs.cache.DefaultCacheHelper(
-            CONFIG_CACHE_FILENAME.toPath(),
+        cacheHelper = DefaultCacheHelper(
+            (StorageDirectory.path + CONFIG_CACHE_FILENAME).toPath(),
             FileSystem.SYSTEM
         ),
         networkHelper = DefaultNetworkHelper()
     )
 
     /**
-     * Hash map containing the current config values
+     * JsonObject containing the current config values
      */
     val values: JsonObject get() = _values
 

@@ -48,6 +48,7 @@ kotlin {
 
         androidMain.dependencies {
             implementation(libs.kotlinx.coroutines.android)
+            implementation(libs.androidx.startup)
         }
 
         iosMain.dependencies {
@@ -69,7 +70,7 @@ kotlin {
 android {
     namespace = "io.github.bradpatras.basicremoteconfigs"
     compileSdk = 35
-
+    sourceSets["main"].manifest.srcFile("src/androidMain/kotlin/AndroidManifest.xml")
     defaultConfig {
         minSdk = 21
     }

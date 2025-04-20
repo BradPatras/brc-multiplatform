@@ -31,3 +31,4 @@ dependencyResolutionManagement {
 include(":basic-remote-configs")
 include(":sample:composeApp")
 
+include(":android-demo")

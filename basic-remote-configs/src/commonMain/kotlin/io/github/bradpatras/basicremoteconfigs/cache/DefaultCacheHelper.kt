@@ -19,7 +19,11 @@ internal class DefaultCacheHelper(
 ) : io.github.bradpatras.basicremoteconfigs.cache.CacheHelper {
     override suspend fun getCacheConfigs(): JsonObject? = withContext(Dispatchers.IO) {
         // return early if cache file doesn't exist
-        if (!fileSystem.exists(cachePath)) return@withContext null
+        try {
+            if (!fileSystem.exists(cachePath)) return@withContext null
+        } catch (exception: Throwable) {
+            return@withContext null
+        }
 
         fileSystem.source(cachePath).use { fileSource ->
             fileSource.buffer().use { bufferedFileSource ->
