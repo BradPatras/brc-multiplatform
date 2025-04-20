@@ -1,3 +1,4 @@
+import com.vanniktech.maven.publish.SonatypeHost
 
 plugins {
     alias(libs.plugins.multiplatform)
@@ -9,7 +10,7 @@ plugins {
 }
 
 group = "io.github.bradpatras"
-version = property("VERSION_NAME")!!
+version = "0.0.1"
 val iosLibraryName = "BasicRemoteConfigs"
 
 kotlin {
@@ -84,5 +85,40 @@ multiplatformSwiftPackage {
     distributionMode { remote("https://www.github.com/bradpatras/brc-multiplatform/releases/download/v$version") }
     targetPlatforms {
         iOS { v("16") }
+    }
+}
+
+mavenPublishing {
+    publishToMavenCentral(SonatypeHost.CENTRAL_PORTAL)
+
+    signAllPublications()
+
+    coordinates(group.toString(), "brc", version.toString())
+
+    pom {
+        packaging = "aar"
+        name = "Basic Remote Configs"
+        description = "A library providing the most basic remote config functionality."
+        inceptionYear = "2025"
+        url = "https://github.com/BradPatras/brc-multiplatform"
+        licenses {
+            license {
+                name = "MIT License"
+                url = "https://mit-license.org/"
+                distribution = "https://mit-license.org/"
+            }
+        }
+        developers {
+            developer {
+                id = "bradpatras"
+                name = "Brad Patras"
+                url = "https://github.com/BradPatras/"
+            }
+        }
+        scm {
+            url = "https://github.com/BradPatras/brc-multiplatform"
+            connection = "scm:git:git://github.com/BradPatras/brc-multiplatform.git"
+            developerConnection = "scm:git:git://github.com/BradPatras/brc-multiplatform.git"
+        }
     }
 }
