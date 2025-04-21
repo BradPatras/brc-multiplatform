@@ -30,4 +30,4 @@ dependencyResolutionManagement {
 }
 include(":basic-remote-configs")
 
-include(":android-demo")
+include(":demo-android")

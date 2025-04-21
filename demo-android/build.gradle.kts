@@ -40,7 +40,9 @@ android {
 }
 
 dependencies {
-    implementation(project(path = ":basic-remote-configs"))
+
+    implementation("io.github.bradpatras:brc-android:0.0.1")
+
     implementation(libs.kotlinx.serialization.json)
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
