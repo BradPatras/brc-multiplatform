@@ -1,7 +1,7 @@
 # Basic Remote Configs 🛰📝
 ![gradle build workflow](https://github.com/BradPatras/brc-multiplatform/actions/workflows/gradle.yml/badge.svg)
-[![spm version](https://img.shields.io/badge/Swift%20Package%20Manager-0.0.1-blue)](https://github.com/BradPatras/brc-ios/releases)
-[![maven central version](https://img.shields.io/badge/Maven%20Central-0.0.1-green)](https://central.sonatype.com/artifact/io.github.bradpatras/brc)
+[![spm version](https://img.shields.io/badge/Swift%20Package%20Manager-0.0.1-blue?style=flat&logo=ios)](https://github.com/BradPatras/brc-ios/releases)
+[![maven central version](https://img.shields.io/badge/Maven%20Central-0.0.1-green?style=flat&logo=android)](https://central.sonatype.com/artifact/io.github.bradpatras/brc)
 
 _one brc to rule them all_
 
