@@ -1,7 +1,6 @@
 package io.github.bradpatras.basicremoteconfigs.network
 
 import io.ktor.client.HttpClient
-import io.ktor.client.engine.cio.CIO
 import io.ktor.client.request.get
 import io.ktor.client.request.headers
 import io.ktor.client.statement.HttpResponse
@@ -14,7 +13,7 @@ import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.JsonObject
 
 class DefaultNetworkHelper: NetworkHelper {
-    private val client = HttpClient(CIO)
+    private val client = HttpClient()
 
     override suspend fun requestJson(
         url: String,

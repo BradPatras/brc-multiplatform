@@ -29,20 +29,19 @@ kotlin {
 
     sourceSets {
         commonMain.dependencies {
+            implementation(libs.kermit)
             implementation(libs.kotlinx.coroutines.core)
             implementation(libs.kotlinx.coroutines.test)
             implementation(libs.kotlinx.datetime)
             implementation(libs.kotlinx.serialization.json)
-            implementation(libs.ktor.client.core)
             implementation(libs.ktor.client.content.negotiation)
-            implementation(libs.ktor.client.serialization)
+            implementation(libs.ktor.client.core)
             implementation(libs.ktor.client.logging)
-            implementation(libs.ktor.client.cio)
+            implementation(libs.ktor.client.serialization)
             implementation(libs.okio)
         }
 
         commonTest.dependencies {
-            implementation(kotlin("test"))
             implementation(libs.okio.test)
             implementation(libs.kotlinx.coroutines.test)
         }
@@ -50,6 +49,7 @@ kotlin {
         androidMain.dependencies {
             implementation(libs.kotlinx.coroutines.android)
             implementation(libs.androidx.startup)
+            implementation(libs.ktor.client.okhttp)
         }
 
         iosMain.dependencies {
