@@ -48,6 +48,8 @@ struct ContentView: View {
 			}
 
 			Spacer()
+
+			Text("local cache version: \(brc.version)")
 		}
 	}
 }

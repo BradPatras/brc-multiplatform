@@ -25,13 +25,13 @@ private const val VERSION_NONE = -1
 private const val VERSION_KEY = "v"
 
 // Cache filename
-private const val CONFIG_CACHE_FILENAME = "brc_cache"
+private const val CONFIG_CACHE_FILENAME = "brc-cache"
 
 // Amount of hours the cached configs remain valid
 private val CACHE_EXPIRATION: Duration = Duration.parse("24h")
 
 @Suppress("MemberVisibilityCanBePrivate", "unused")
-public class BasicRemoteConfigs internal constructor(
+class BasicRemoteConfigs internal constructor(
     private val remoteUrl: String,
     private val customHeaders: HashMap<String, String> = HashMap(),
     private val instantProvider: InstantProvider,
@@ -47,7 +47,7 @@ public class BasicRemoteConfigs internal constructor(
      * @property customHeaders Additional headers that will be sent with the fetch request
      * @constructor Create empty Basic remote configs
      */
-    public constructor(
+    constructor(
         remoteUrl: String,
         customHeaders: HashMap<String, String> = HashMap()
     ) : this(

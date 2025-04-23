@@ -29,7 +29,6 @@ kotlin {
 
     sourceSets {
         commonMain.dependencies {
-            implementation(libs.kermit)
             implementation(libs.kotlinx.coroutines.core)
             implementation(libs.kotlinx.coroutines.test)
             implementation(libs.kotlinx.datetime)

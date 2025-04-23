@@ -7,5 +7,5 @@ import platform.Foundation.NSUserDomainMask
 
 actual object StorageDirectory {
     actual val path: String
-        get() = (NSFileManager.defaultManager.URLsForDirectory(NSDocumentDirectory, NSUserDomainMask).last() as NSURL).absoluteString!!
+        get() = (NSFileManager.defaultManager.URLsForDirectory(NSDocumentDirectory, NSUserDomainMask).last() as NSURL).path() ?: "/"
 }

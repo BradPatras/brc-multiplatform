@@ -16,11 +16,13 @@ import okio.use
 internal class DefaultCacheHelper(
     private val cachePath: Path,
     private val fileSystem: FileSystem
-) : io.github.bradpatras.basicremoteconfigs.cache.CacheHelper {
+) : CacheHelper {
     override suspend fun getCacheConfigs(): JsonObject? = withContext(Dispatchers.IO) {
         // return early if cache file doesn't exist
         try {
-            if (!fileSystem.exists(cachePath)) return@withContext null
+            if (!fileSystem.exists(cachePath)) {
+                return@withContext null
+            }
         } catch (exception: Throwable) {
             return@withContext null
         }
@@ -35,8 +37,12 @@ internal class DefaultCacheHelper(
 
     override suspend fun setCacheConfigs(configs: JsonObject): Unit = withContext(Dispatchers.IO) {
         val parent = cachePath.parent ?: Path.DIRECTORY_SEPARATOR.toPath()
-        if (!fileSystem.exists(parent)) {
-            fileSystem.createDirectories(parent)
+        try {
+            if (!fileSystem.exists(parent)) {
+                fileSystem.createDirectories(parent)
+            }
+        } catch (exception: Throwable) {
+            throw exception
         }
 
         fileSystem.sink(cachePath).use { fileSink ->
