@@ -41,6 +41,7 @@ kotlin {
         }
 
         commonTest.dependencies {
+            implementation(kotlin("test"))
             implementation(libs.okio.test)
             implementation(libs.kotlinx.coroutines.test)
         }
