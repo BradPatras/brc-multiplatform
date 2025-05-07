@@ -18,3 +18,4 @@ Pods/
 /sample/iosApp/iosApp.xcodeproj/project.xcworkspace/contents.xcworkspacedata
 *.xcframework.zip
 */swiftpackage/
+**/xcshareddata/

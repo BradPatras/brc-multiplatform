@@ -41,7 +41,7 @@ android {
 
 dependencies {
 
-    implementation("io.github.bradpatras:brc-android:0.0.1")
+    implementation("io.github.bradpatras:brc-android:0.4.0")
 
     implementation(libs.kotlinx.serialization.json)
     implementation(libs.androidx.core.ktx)

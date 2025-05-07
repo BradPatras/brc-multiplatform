@@ -40,7 +40,7 @@ class MainActivity : AppCompatActivity() {
             brc.fetchConfigs()
             withContext(Dispatchers.Main) {
                 updateUI(
-                    brc.values.entries.joinToString(separator = ",\n") { "${it.key}: ${it.value}" },
+                    brc.getKeys().joinToString(separator = ",\n"),
                     false
                 )
             }

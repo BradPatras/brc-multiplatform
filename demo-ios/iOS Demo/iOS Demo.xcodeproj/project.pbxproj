@@ -7,27 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		5CA89F2C2DB882F500CE6A27 /* BasicRemoteConfigs.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5CA89F0D2DB74AC900CE6A27 /* BasicRemoteConfigs.xcframework */; };
-		5CA89F2D2DB882F500CE6A27 /* BasicRemoteConfigs.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 5CA89F0D2DB74AC900CE6A27 /* BasicRemoteConfigs.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		5CA89F312DCB06B000CE6A27 /* BasicRemoteConfigs in Frameworks */ = {isa = PBXBuildFile; productRef = 5CA89F302DCB06B000CE6A27 /* BasicRemoteConfigs */; };
 /* End PBXBuildFile section */
-
-/* Begin PBXCopyFilesBuildPhase section */
-		5CA89F2E2DB882F500CE6A27 /* Embed Frameworks */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = "";
-			dstSubfolderSpec = 10;
-			files = (
-				5CA89F2D2DB882F500CE6A27 /* BasicRemoteConfigs.xcframework in Embed Frameworks */,
-			);
-			name = "Embed Frameworks";
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		5CA89EE92DB5EAFE00CE6A27 /* iOS Demo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "iOS Demo.app"; sourceTree = BUILT_PRODUCTS_DIR; };
-		5CA89F0D2DB74AC900CE6A27 /* BasicRemoteConfigs.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = BasicRemoteConfigs.xcframework; path = "../../basic-remote-configs/swiftpackage/BasicRemoteConfigs.xcframework"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -43,7 +27,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5CA89F2C2DB882F500CE6A27 /* BasicRemoteConfigs.xcframework in Frameworks */,
+				5CA89F312DCB06B000CE6A27 /* BasicRemoteConfigs in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -54,7 +38,6 @@
 			isa = PBXGroup;
 			children = (
 				5CA89EEB2DB5EAFE00CE6A27 /* iOS Demo */,
-				5CA89F0C2DB74AC900CE6A27 /* Frameworks */,
 				5CA89EEA2DB5EAFE00CE6A27 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -67,14 +50,6 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		5CA89F0C2DB74AC900CE6A27 /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-				5CA89F0D2DB74AC900CE6A27 /* BasicRemoteConfigs.xcframework */,
-			);
-			name = Frameworks;
-			sourceTree = "<group>";
-		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -85,7 +60,6 @@
 				5CA89EE52DB5EAFE00CE6A27 /* Sources */,
 				5CA89EE62DB5EAFE00CE6A27 /* Frameworks */,
 				5CA89EE72DB5EAFE00CE6A27 /* Resources */,
-				5CA89F2E2DB882F500CE6A27 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -96,6 +70,7 @@
 			);
 			name = "iOS Demo";
 			packageProductDependencies = (
+				5CA89F302DCB06B000CE6A27 /* BasicRemoteConfigs */,
 			);
 			productName = "iOS Demo";
 			productReference = 5CA89EE92DB5EAFE00CE6A27 /* iOS Demo.app */;
@@ -126,6 +101,7 @@
 			mainGroup = 5CA89EE02DB5EAFE00CE6A27;
 			minimizedProjectReferenceProxies = 1;
 			packageReferences = (
+				5CA89F2F2DCB06B000CE6A27 /* XCRemoteSwiftPackageReference "brc-multiplatform" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 5CA89EEA2DB5EAFE00CE6A27 /* Products */;
@@ -355,6 +331,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		5CA89F2F2DCB06B000CE6A27 /* XCRemoteSwiftPackageReference "brc-multiplatform" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/bradpatras/brc-multiplatform";
+			requirement = {
+				kind = exactVersion;
+				version = 0.4.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		5CA89F302DCB06B000CE6A27 /* BasicRemoteConfigs */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 5CA89F2F2DCB06B000CE6A27 /* XCRemoteSwiftPackageReference "brc-multiplatform" */;
+			productName = BasicRemoteConfigs;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 5CA89EE12DB5EAFE00CE6A27 /* Project object */;
 }
