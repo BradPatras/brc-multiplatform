@@ -36,7 +36,7 @@ class BasicRemoteConfigsTests {
         )
 
         brc.fetchConfigs(ignoreCache = false)
-        assertEquals(brc.values, networkConfigs)
+        assertEquals(brc.getString("test"), "network")
     }
 
     @Test
@@ -66,7 +66,7 @@ class BasicRemoteConfigsTests {
         )
 
         brc.fetchConfigs(ignoreCache = false)
-        assertEquals(brc.values, cacheConfigs)
+        assertEquals(brc.getString("test"), "cache")
     }
 
     @Test
@@ -95,7 +95,7 @@ class BasicRemoteConfigsTests {
         )
 
         brc.fetchConfigs(ignoreCache = true)
-        assertEquals(brc.values, networkConfigs)
+        assertEquals(brc.getString("test"), "network")
     }
 
     @Test
@@ -126,7 +126,7 @@ class BasicRemoteConfigsTests {
 
         brc.fetchConfigs()
         brc.clearCache()
-        assertEquals(brc.values, JsonObject(emptyMap()))
+        assertEquals(brc.getKeys(), emptySet())
     }
 
     @Test
@@ -151,6 +151,6 @@ class BasicRemoteConfigsTests {
         )
 
         brc.fetchConfigs(ignoreCache = true)
-        assertEquals(brc.values, cacheConfigs)
+        assertEquals(brc.getString("test"), "cache")
     }
 }

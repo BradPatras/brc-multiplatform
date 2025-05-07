@@ -10,6 +10,7 @@ import kotlinx.coroutines.coroutineScope
 import kotlinx.datetime.Instant
 import kotlinx.serialization.json.JsonObject
 import kotlinx.serialization.json.booleanOrNull
+import kotlinx.serialization.json.contentOrNull
 import kotlinx.serialization.json.intOrNull
 import kotlinx.serialization.json.jsonArray
 import kotlinx.serialization.json.jsonPrimitive
@@ -38,7 +39,7 @@ class BasicRemoteConfigs internal constructor(
     private val cacheHelper: CacheHelper,
     private val networkHelper: NetworkHelper
 ) {
-    private var _values: JsonObject = JsonObject(emptyMap())
+    private var values: JsonObject = JsonObject(emptyMap())
 
     /**
      * Basic remote configs
@@ -60,11 +61,6 @@ class BasicRemoteConfigs internal constructor(
         ),
         networkHelper = DefaultNetworkHelper()
     )
-
-    /**
-     * JsonObject containing the current config values
-     */
-    val values: JsonObject get() = _values
 
     /**
      * Version parsed from the fetched configs.  If configs haven't been fetched or
@@ -90,12 +86,12 @@ class BasicRemoteConfigs internal constructor(
         val cacheIsNotExpired = instantProvider.now() - cacheLastModified < CACHE_EXPIRATION
 
         if (!ignoreCache && cacheConfigs != null && cacheIsNotExpired) {
-            _values = cacheConfigs
+            values = cacheConfigs
         } else {
             try {
                 fetchRemoteConfigs()
             } catch (e: Throwable) {
-                _values = cacheConfigs ?: JsonObject(emptyMap())
+                values = cacheConfigs ?: JsonObject(emptyMap())
             }
         }
     }
@@ -106,7 +102,7 @@ class BasicRemoteConfigs internal constructor(
      */
     fun clearCache() {
         cacheHelper.deleteCacheFile()
-        _values = JsonObject(emptyMap())
+        values = JsonObject(emptyMap())
         fetchDate = null
     }
 
@@ -119,7 +115,7 @@ class BasicRemoteConfigs internal constructor(
             if ((newVersion != version) or (newVersion == VERSION_NONE)) {
                 fetchDate = instantProvider.now()
                 cacheHelper.setCacheConfigs(configs)
-                _values = configs
+                values = configs
             }
         } catch (e: Throwable) {
             throw e
@@ -162,7 +158,7 @@ class BasicRemoteConfigs internal constructor(
      * @return String value associated with key, null if key or value doesn't exist.
      */
     fun getString(key: String): String? {
-        return values[key]?.jsonPrimitive?.takeIf { it.isString }?.content
+        return values[key]?.jsonPrimitive?.takeIf { it.isString }?.contentOrNull
     }
 
     /**
