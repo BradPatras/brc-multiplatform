@@ -15,8 +15,8 @@ let package = Package(
     targets: [
         .binaryTarget(
             name: "BasicRemoteConfigs",
-            url: "https://www.github.com/bradpatras/brc-multiplatform/releases/download/v0.1.0/BasicRemoteConfigs.xcframework.zip",
-            checksum: "acdf29748f8f216673151bb84ffa327c36b50f2b33f731597fc369b7f4e4ffe5"
+            url: "https://www.github.com/bradpatras/brc-multiplatform/releases/download/v0.4.0/BasicRemoteConfigs.xcframework.zip",
+            checksum: "d556ddb544c230e0a55571a0f574658717c0f69e209c852de012ae3d2125e59d"
         ),
     ]
 )
