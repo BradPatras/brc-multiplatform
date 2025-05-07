@@ -10,7 +10,7 @@ plugins {
 }
 
 group = "io.github.bradpatras"
-version = "0.0.2"
+version = "0.1.0"
 val iosLibraryName = "BasicRemoteConfigs"
 
 kotlin {
