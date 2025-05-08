@@ -11,7 +11,7 @@ import SwiftUI
 @main
 struct DemoApp: App {
 	let brc = BasicRemoteConfigs(
-		remoteUrl: "https://github.com/BradPatras/basic-remote-configs/raw/main/examples/simple.json",
+		remoteUrl: "https://github.com/BradPatras/brc-multiplatform/raw/main/simple-config.json",
 		customHeaders: .init()
 	)
 

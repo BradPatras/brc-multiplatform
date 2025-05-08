@@ -11,7 +11,7 @@ import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-private const val CONFIG_URL = "https://github.com/BradPatras/basic-remote-configs/raw/main/examples/simple.json"
+private const val CONFIG_URL = "https://github.com/BradPatras/brc-multiplatform/raw/main/simple-config.json"
 
 class MainActivity : AppCompatActivity() {
     private val brc: BasicRemoteConfigs = BasicRemoteConfigs(remoteUrl = CONFIG_URL)
