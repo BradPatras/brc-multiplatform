@@ -1,0 +1,7 @@
+{
+  "v": 1,
+  "someFlag": false,
+  "someMessage": "Welcome to basic remote configs!",
+  "nullValue": null,
+  "arrayOfWords": ["super", "duper", "simple", "configs"]
+}
