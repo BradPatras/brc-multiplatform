@@ -9,6 +9,8 @@ _one brc to rule them all_
 
 Bare-bones remote config library for Android and iOS.  Motivation for this project is having simple remote configs in my app projects where pulling in Firebase would be overkill.
 
+<sup>Previously I had implemented this library separately for both Android and iOS using their respective languages, those repos still exist, here: [brc-android](https://github.com/bradpatras/brc-android), [brc-ios](https://github.com/bradpatras/brc-ios) but this library effectively replaces those.</sup>
+
 ## Config file format
 Configs are in JSON format. Compatible data types include `integer`, `string`, `boolean`, `null`, and `array(integer|string|boolean)`. Nested objects are not officially supported.
 
@@ -73,3 +75,6 @@ coroutineScope {
     }
 }
 ```
+
+## Future
+I am patiently waiting for the day when direct [kotlin to swift export](https://youtrack.jetbrains.com/issue/KT-64572/The-first-public-release-of-Swift-Export?_gl=1*fq78w3*_gcl_au*MTY3NTg0NDY3OS4xNzQ2NTc5NTQ0*FPAU*MTY3NTg0NDY3OS4xNzQ2NTc5NTQ0*_ga*MTQ5NTIyOTU0MS4xNzQ1OTgwOTIx*_ga_9J976DJZ68*czE3NDY4NDI4ODIkbzQkZzEkdDE3NDY4NDMwMTQkajU0JGwwJGgw) is released because the reliance on Objective-C is one of the biggest downsides of kmp in my opinion (coming from an iOS developer). Hopefully that'll improve the ergonomics on the iOS side a little bit. The roadman says they're aiming for a 2025 public release! 🤞
