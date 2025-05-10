@@ -92,6 +92,7 @@ class BasicRemoteConfigs internal constructor(
                 fetchRemoteConfigs()
             } catch (e: Throwable) {
                 values = cacheConfigs ?: JsonObject(emptyMap())
+                throw e
             }
         }
     }
@@ -107,18 +108,14 @@ class BasicRemoteConfigs internal constructor(
     }
 
     private suspend fun fetchRemoteConfigs(): Unit = coroutineScope {
-        try {
-            val configs = requireNotNull(networkHelper.requestJson(remoteUrl, customHeaders))
-            val newVersion = configs[VERSION_KEY]?.jsonPrimitive?.intOrNull ?: VERSION_NONE
+        val configs = requireNotNull(networkHelper.requestJson(remoteUrl, customHeaders))
+        val newVersion = configs[VERSION_KEY]?.jsonPrimitive?.intOrNull ?: VERSION_NONE
 
-            // if version hasn't changed, do nothing
-            if ((newVersion != version) or (newVersion == VERSION_NONE)) {
-                fetchDate = instantProvider.now()
-                cacheHelper.setCacheConfigs(configs)
-                values = configs
-            }
-        } catch (e: Throwable) {
-            throw e
+        // if version hasn't changed, do nothing
+        if ((newVersion != version) or (newVersion == VERSION_NONE)) {
+            fetchDate = instantProvider.now()
+            cacheHelper.setCacheConfigs(configs)
+            values = configs
         }
     }
 

@@ -2,12 +2,12 @@ package io.github.bradpatras.basicremoteconfigs
 
 import kotlinx.coroutines.test.runTest
 import kotlinx.datetime.Instant
-import kotlinx.serialization.json.JsonObject
 import kotlinx.serialization.json.buildJsonObject
 import kotlinx.serialization.json.jsonObject
 import kotlinx.serialization.json.put
 import kotlin.test.Test
 import kotlin.test.assertEquals
+import kotlin.test.assertFails
 
 class BasicRemoteConfigsTests {
     @Test
@@ -150,7 +150,31 @@ class BasicRemoteConfigsTests {
             networkHelper = networkHelper
         )
 
-        brc.fetchConfigs(ignoreCache = true)
-        assertEquals(brc.getString("test"), "cache")
+        try {
+            brc.fetchConfigs(ignoreCache = true)
+        } catch (e: Throwable) {
+            assertEquals(brc.getString("test"), "cache")
+        }
+    }
+
+    @Test
+    fun testNetworkException() = runTest {
+        val cacheHelper = FakeCacheHelper(
+            null,
+            lastModified = Instant.DISTANT_PAST,
+            instantProvider = FakeInstantProvider(Instant.DISTANT_FUTURE)
+        )
+        val networkHelper = FakeThrowingNetworkHelper()
+
+        val brc = BasicRemoteConfigs(
+            remoteUrl = "http://google.com/",
+            instantProvider = FakeInstantProvider(Instant.DISTANT_FUTURE),
+            cacheHelper = cacheHelper,
+            networkHelper = networkHelper
+        )
+
+        assertFails {
+            brc.fetchConfigs(ignoreCache = true)
+        }
     }
 }

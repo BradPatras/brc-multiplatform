@@ -46,7 +46,10 @@ class MainActivity : AppCompatActivity() {
             }
         } catch (error: Throwable) {
             withContext(Dispatchers.Main) {
-                updateUI("Encountered an error when fetching configs", false)
+                updateUI(
+                    "Encountered an error when fetching configs",
+                    false
+                )
             }
         }
     }
