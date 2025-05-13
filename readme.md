@@ -34,18 +34,19 @@ This repo is hosting an [example config json file](/examples/simple.json). This 
 ### Initialization
 ```swift
 // Swift
-private val brc = BasicRemoteConfigs(
-  remoteUrl = "https://github.com/BradPatras/brc-multiplatform/raw/main/simple-config.json"
-)
-```
-
-```kotlin
-// Kotlin
 let brc = BasicRemoteConfigs(
   remoteUrl: "https://github.com/BradPatras/brc-multiplatform/raw/main/simple-config.json",
   customHeaders: .init()
 )
 ```
+
+```kotlin
+// Kotlin
+private val brc = BasicRemoteConfigs(
+  remoteUrl = "https://github.com/BradPatras/brc-multiplatform/raw/main/simple-config.json"
+)
+```
+
 ----
 ### Fetching
 ```swift
