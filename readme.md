@@ -31,7 +31,20 @@ This repo is hosting an [example config json file](/examples/simple.json). This 
 
 🔐 &nbsp; Custom request headers can be passed into the initializer to facilitate auth tokens or whatever else.
 
-### Initialization
+## Adding the dependency
+**iOS**
+```swift
+// In Xcode, File > Add Package Dependencies, then search for this repo:
+// https://github.com/bradpatras/brc-multiplatform
+```
+
+**Android/KMP**
+```kotlin
+// Add this to you build.gradle.kts file
+implementation("io.github.bradpatras:brc-android:0.4.0")
+```
+
+## Initialization
 ```swift
 // Swift
 let brc = BasicRemoteConfigs(
@@ -47,9 +60,7 @@ private val brc = BasicRemoteConfigs(
 )
 ```
 
-----
-
-### Fetching
+## Fetching
 
 ```swift
 // Swift
