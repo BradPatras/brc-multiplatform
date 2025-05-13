@@ -38,7 +38,7 @@ This repo is hosting an [example config json file](/examples/simple.json). This 
 // https://github.com/bradpatras/brc-multiplatform
 ```
 
-**Android/KMP**
+**Android**
 ```kotlin
 // Add this to you build.gradle.kts file
 implementation("io.github.bradpatras:brc-android:0.4.0")
