@@ -48,7 +48,9 @@ private val brc = BasicRemoteConfigs(
 ```
 
 ----
+
 ### Fetching
+
 ```swift
 // Swift
 Task {
@@ -77,5 +79,15 @@ coroutineScope {
 }
 ```
 
+## Why KMP
+I originally wrote this library twice, a version in swift for iOS apps and a version in kotlin for Android apps. After I learned more about Kotlin Multiplatform, I realized this simple library may be a good candidate for a shared codebase.
+
+## Publishing
+Android and iOS apps use completely different dependency management, Swift Package Manager for iOS and Gradle for Android. Since this library is made to be consumed by both platforms, it needs to be published two different ways.
+
+The Android/Multiplatform artifact is [published to Maven Central](https://central.sonatype.com/search?q=io.github.bradpatras.brc) and since it's a KMP Library, multiple variants get published (brc-android, brc-iosX64, etc) in order to support KMP Apps.
+
+The iOS package is published right here in this repository using the typical SPM library setup: a `Package.swift` file in the root directory and the actual xcframework artifacts attached to [github releases](https://github.com/BradPatras/brc-multiplatform/releases/tag/v0.4.0).
+
 ## Future
-I am patiently waiting for the day when direct [kotlin to swift export](https://youtrack.jetbrains.com/issue/KT-64572/The-first-public-release-of-Swift-Export?_gl=1*fq78w3*_gcl_au*MTY3NTg0NDY3OS4xNzQ2NTc5NTQ0*FPAU*MTY3NTg0NDY3OS4xNzQ2NTc5NTQ0*_ga*MTQ5NTIyOTU0MS4xNzQ1OTgwOTIx*_ga_9J976DJZ68*czE3NDY4NDI4ODIkbzQkZzEkdDE3NDY4NDMwMTQkajU0JGwwJGgw) is released because the reliance on Objective-C is one of the biggest downsides of kmp in my opinion (coming from an iOS developer). Hopefully that'll improve the ergonomics on the iOS side a little bit. The roadman says they're aiming for a 2025 public release! 🤞
+I am patiently waiting for the day when direct [kotlin to swift export](https://youtrack.jetbrains.com/issue/KT-64572/The-first-public-release-of-Swift-Export?_gl=1*fq78w3*_gcl_au*MTY3NTg0NDY3OS4xNzQ2NTc5NTQ0*FPAU*MTY3NTg0NDY3OS4xNzQ2NTc5NTQ0*_ga*MTQ5NTIyOTU0MS4xNzQ1OTgwOTIx*_ga_9J976DJZ68*czE3NDY4NDI4ODIkbzQkZzEkdDE3NDY4NDMwMTQkajU0JGwwJGgw) is released because the reliance on Objective-C is one of the biggest downsides of kmp in my opinion (coming from an iOS developer). Hopefully that'll improve the ergonomics on the iOS side a little bit. The roadmap says they're aiming for a 2025 public release! 🤞
