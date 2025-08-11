@@ -45,6 +45,8 @@ implementation("io.github.bradpatras:brc-android:0.4.0")
 ```
 
 ## Initialization
+You are responsible for creating and managing your Brc instance in whatever way makes sense for your use case.
+
 ```swift
 // Swift
 let brc = BasicRemoteConfigs(
