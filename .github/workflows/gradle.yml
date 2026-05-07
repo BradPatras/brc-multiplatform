@@ -22,5 +22,5 @@ jobs:
       - name: Build with Gradle
         run: ./gradlew build
       - name: Summarize tests results
-        uses: jeantessier/test-summary-action@v1.0.8
+        uses: jeantessier/test-summary-action@v1
         if: ${{ always() }}
