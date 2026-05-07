@@ -27,7 +27,7 @@ Example of config format
 `v` is an integer value representing the config file's version. It's not required, but if it's present the client libraries will use this value when deciding if their local cache needs updating.
 
 ## In practice
-This repo is hosting an [example config json file](/examples/simple.json). This example config is currently being consumed by the [Android](https://github.com/BradPatras/brc-android) and [iOS](https://github.com/BradPatras/brc-ios) demo apps. 
+This repo is hosting an [example config json file](/examples/simple.json). This example config is currently being consumed by the [Android](https://github.com/BradPatras/brc-multiplatform/tree/main/demo-android) and [iOS](https://github.com/BradPatras/brc-multiplatform/tree/main/demo-ios) demo apps. 
 
 🔐 &nbsp; Custom request headers can be passed into the initializer to facilitate auth tokens or whatever else.
 
